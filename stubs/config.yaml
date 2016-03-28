@@ -1,0 +1,35 @@
+---
+ip: "192.168.33.10"
+memory: 2048
+cpus: 1
+
+# Install scripts
+install:
+  - install-apache.sh
+  - install-nginx.sh
+  - install-mysql.sh
+  - install-php54.sh
+  - install-curl.sh
+  - install-git.sh
+  - install-composer.sh
+  - install-memcached.sh
+  - install-redis.sh
+  - install-gearman.sh
+
+authorize: ~/.ssh/id_rsa.pub
+
+keys:
+    - ~/.ssh/id_rsa
+    - ~/.ssh/id_rsa.pub
+
+folders:
+    - map: .
+      to: /vagrant
+      type: nfs
+
+sites:
+    - map: local.marcolumia.com
+      to: /home/vagrant/Sites/marcolumia.com/public
+
+databases:
+    - blog
