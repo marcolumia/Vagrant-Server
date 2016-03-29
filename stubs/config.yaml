@@ -3,7 +3,6 @@ ip: "192.168.33.10"
 memory: 2048
 cpus: 1
 
-# Install scripts
 install:
   - install-apache.sh
   - install-nginx.sh
@@ -23,13 +22,12 @@ keys:
     - ~/.ssh/id_rsa.pub
 
 folders:
-    - map: .
-      to: /vagrant
+    - map: ~/Sites/marcolumia.com
+      to: /home/vagrant/marcolumia.com
       type: nfs
 
-sites:
-    - map: local.marcolumia.com
-      to: /home/vagrant/Sites/marcolumia.com/public
+virtualhosts:
+    - default.sh
 
 databases:
     - blog

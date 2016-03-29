@@ -2,6 +2,7 @@ require 'yaml'
 
 configDir = File.expand_path(".config")
 scriptsDir = File.dirname(__FILE__) + "/scripts/"
+vhostsDir = File.dirname(__FILE__) + "/virtualhosts/"
 config = configDir + "/config.yaml"
 
 settings = YAML::load(File.read(config))
@@ -94,11 +95,30 @@ Vagrant.configure(2) do |config|
   # Update Debian
   config.vm.provision "shell", inline: "apt-get update"
 
-  # Install from scripts
+  # Run install scripts
   if settings.include? 'install'
     settings["install"].each do |script|
       config.vm.provision "shell" do |s|
         s.path = scriptsDir + "/" + script
+      end
+    end
+  end
+
+  # Virtualhost setup scripts
+  if settings.include? 'virtualhosts'
+    settings["virtualhosts"].each do |script|
+      config.vm.provision "shell" do |s|
+        s.path = vhostsDir + "/" + script
+      end
+    end
+  end
+
+  # Setup Databases
+  if settings.include? 'databases'
+    settings["databases"].each do |db|
+      config.vm.provision "shell" do |s|
+        s.path = scriptsDir + "/create-mysql-db.sh"
+        s.args = [db]
       end
     end
   end

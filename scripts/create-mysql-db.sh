@@ -1,20 +1,23 @@
 #!/bin/bash
 #
 # Example:
-# sudo ./mysql-db-create.sh dbname dbuser password
+# bash mysql-db-create.sh dbname
 
-EXPECTED_ARGS=3
+EXPECTED_ARGS=1
 E_BADARGS=65
 MYSQL=`which mysql`
+HOST='localhost'
+USER='user'
+PASSWORD='password'
+DB=$1
 
-Q1="CREATE DATABASE IF NOT EXISTS $1;"
-Q2="GRANT ALL ON *.* TO '$2'@'localhost' IDENTIFIED BY '$3';"
+Q1="CREATE DATABASE IF NOT EXISTS $DB;"
+Q2="GRANT ALL ON *.* TO '$USER'@'$HOST' IDENTIFIED BY '$PASSWORD';"
 Q3="FLUSH PRIVILEGES;"
 SQL="${Q1}${Q2}${Q3}"
 
 if [ $# -ne $EXPECTED_ARGS ]
 then
-  #echo "Usage: $0 dbname dbuser dbpass"
   exit $E_BADARGS
 fi
 
