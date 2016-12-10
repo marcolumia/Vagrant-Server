@@ -7,7 +7,7 @@ install:
   - install-apache.sh
   - install-nginx.sh
   - install-mysql.sh
-  - install-php54.sh
+  - install-php56.sh
   - install-curl.sh
   - install-git.sh
   - install-composer.sh
@@ -24,6 +24,9 @@ keys:
 folders:
     - map: ~/Sites/marcolumia.com
       to: /home/vagrant/marcolumia.com
+      type: nfs
+    - map: ~/Sites/MobaReplay
+      to: /home/vagrant/MobaReplay
       type: nfs
 
 virtualhosts:
